@@ -24,7 +24,7 @@ class UserController extends FOSRestController
      * 
      * @return Response
      */
-    public function readAll(UserRepository $userRepository)
+    public function readAllUsers(UserRepository $userRepository)
     {
         //get all users from database, return as json
         $users = $userRepository->findAll();
@@ -50,5 +50,33 @@ class UserController extends FOSRestController
             return $this->handleView($this->view(['status'=>'ok'], Response::HTTP_CREATED));
         }        
         return $this->handleView($this->view($form->getErrors()));
+    }
+
+
+    /**
+     * @Rest\Delete("/user/{id}")
+     * 
+     * @return Response
+     */
+    public function deleteUser($id, EntityManagerInterface $entityManagerInterface, UserRepository $userRepository)
+    {
+        $user = $userRepository->find($id);
+        $entityManagerInterface->remove($user);
+        $entityManagerInterface->flush();
+        return $this->handleView($this->view(['status' => 'ok'], Response::HTTP_NO_CONTENT));
+    }
+
+    /**
+     * @Rest\Get("/user/{id}/groups")
+     * 
+     * @return Response
+     */
+    public function getUserGroups(int $id, UserRepository $userRepository)
+    {
+        $user = $userRepository->find($id);
+        $groups = $user->getGroups();
+
+        //below can create problems, refactor after adding some groups
+        return $this->handleView($this->view($groups));
     }
 }
