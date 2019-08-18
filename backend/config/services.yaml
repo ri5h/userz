@@ -25,3 +25,9 @@ services:
 
     # add more service definitions when explicit configuration is needed
     # please note that last definitions always *replace* previous ones
+
+    # add view listerners for the templates
+    # FOS Rest Bundle is incompatible with Sensio Framework Extra Bundle v4.0
+    # https://github.com/FriendsOfSymfony/FOSRestBundle/issues/1768
+    sensio_framework_extra.view.listener:
+        alias: Sensio\Bundle\FrameworkExtraBundle\EventListener\TemplateListener
