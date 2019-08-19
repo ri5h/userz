@@ -33,9 +33,11 @@ Practical Example for a user management app with React as Frontend and Symfony 4
 0. Setup a domain in local or update config.js file for the address(url) of the app.
 1. cd backend
 2. composer install
-3. cd frontend
-4. npm install
-5. npm run serve
+3. php bin/console doctrine:database:create
+4. php bin/console doctrine:migrations:migrate
+5. cd frontend
+6. npm install
+7. npm run serve
 
 #### Todo
 1. Add better validations as current app does not validate much data.
