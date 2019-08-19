@@ -13,6 +13,7 @@ use Doctrine\ORM\EntityManagerInterface;
 use App\Repository\GroupRepository;
 use App\Entity\Group;
 use App\Form\GroupType;
+use App\Repository\UserRepository;
 
 /**
  * @Route("/api",name="group_api")
@@ -36,19 +37,18 @@ class GroupController extends FOSRestController
      * 
      * @return Response
      */
-    public function addGroup(Request $request, EntityManagerInterface $entityManagerInterface)
+    public function addGroup(Request $request, EntityManagerInterface $entityManagerInterface, UserRepository $userRepository)
     {
         $group = new Group();
         $form = $this->createForm(GroupType::class, $group);
         $data = json_decode($request->getContent($request), true);
 
         //users come in as array of objects, we just care about the ids
-        if(count($data["users"]) > 0){
-            $tmp = [];
-            foreach($data["users"] as $user){
-                $tmp[] = $user["id"];
+        if (count($data["users"]) > 0) {
+            foreach ($data["users"] as $user) {
+                $group->addUser($userRepository->findOneBy(["id" => $user["id"]]));
             }
-            $data["users"] = $tmp;
+            unset($data["users"]);
         }
 
         $form->submit($data);

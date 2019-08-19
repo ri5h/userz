@@ -11,6 +11,7 @@ use FOS\RestBundle\Controller\Annotations as Rest;
 
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use App\Form\UserType;
+use App\Repository\GroupRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
@@ -36,16 +37,25 @@ class UserController extends FOSRestController
      * 
      * @return Response
      */
-    public function addUser(Request $request, EntityManagerInterface $entityManagerInterface)
+    public function addUser(Request $request, EntityManagerInterface $entityManagerInterface, GroupRepository $groupRepository)
     {
         $user = new User();
         $form = $this->createForm(UserType::class, $user);
         $data = json_decode($request->getContent($request), true);
+
+        //groups come in as array of objects, we just care about the ids
+        if (count($data["groups"]) > 0) {
+            foreach ($data["groups"] as $group) {
+                $user->addGroup( $groupRepository->findOneBy([ "id" => $group["id"] ]));
+            }
+            unset($data["groups"]);
+        }
         
         $form->submit($data);
 
         if($form->isSubmitted() && $form->isValid()){
             $entityManagerInterface->persist($user);
+            //dd($user);
             $entityManagerInterface->flush();
             return $this->handleView($this->view(['status'=>'ok'], Response::HTTP_CREATED));
         }        
