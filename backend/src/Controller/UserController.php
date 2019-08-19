@@ -42,6 +42,9 @@ class UserController extends FOSRestController
     {
         //get all users from database, return as json
         $users = $userRepository->findOneBy(["id"=>$id]);
+        if(!$users){
+            throw new NotFoundHttpException("User Not Found");
+        }
         return $this->handleView($this->view($users));
     }
 
@@ -53,8 +56,12 @@ class UserController extends FOSRestController
     public function addUser(Request $request, EntityManagerInterface $entityManagerInterface, GroupRepository $groupRepository)
     {
         $user = new User();
-        $form = $this->createForm(UserType::class, $user);
         $data = json_decode($request->getContent($request), true);
+        if (!isset($data["name"]) || strlen($data["name"]) === 0) {
+            throw new NotAcceptableHttpException("Name is required");
+        }
+
+        $form = $this->createForm(UserType::class, $user);
 
         //groups come in as array of objects, we just care about the ids
         if (isset($data["groups"]) &&  count($data["groups"]) > 0) {
@@ -84,8 +91,16 @@ class UserController extends FOSRestController
     public function updateUser($id, Request $request, EntityManagerInterface $entityManagerInterface, GroupRepository $groupRepository, UserRepository $userRepository)
     {
         $user = $userRepository->findOneBy(["id"=>$id]);
-        $form = $this->createForm(UserType::class, $user);
+        if (!$user) {
+            throw new NotFoundHttpException("User Not Found");
+        }
+
         $data = json_decode($request->getContent($request), true);
+        if (!isset($data["name"]) || strlen($data["name"]) === 0) {
+            throw new NotAcceptableHttpException("Name is required");
+        }
+
+        $form = $this->createForm(UserType::class, $user);
 
         //groups come in as array of objects, we just care about the ids
         //TODO : use real update by takling a diff of current groups and required groups
@@ -119,7 +134,7 @@ class UserController extends FOSRestController
     {
         $user = $userRepository->find($id);
         if (!$user) {
-            throw $this->createNotFoundException("User does not exist");
+            throw new NotFoundHttpException("User Not Found");
         }
         $entityManagerInterface->remove($user);
         $entityManagerInterface->flush();
@@ -134,6 +149,9 @@ class UserController extends FOSRestController
     public function getUserGroups(int $id, UserRepository $userRepository)
     {
         $user = $userRepository->find($id);
+        if (!$user) {
+            throw new NotFoundHttpException("User Not Found");
+        }
         $groups = $user->getGroups();
 
         //below can create problems, refactor after adding some groups

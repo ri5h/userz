@@ -14,6 +14,8 @@ use App\Repository\GroupRepository;
 use App\Entity\Group;
 use App\Form\GroupType;
 use App\Repository\UserRepository;
+use Symfony\Component\HttpKernel\Exception\NotAcceptableHttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
 
 /**
  * @Route("/api",name="group_api")
@@ -41,6 +43,7 @@ class GroupController extends FOSRestController
     {
         //get all users from database, return as json
         $group = $groupRepository->findOneBy(["id" => $id]);
+        if(!$group){ throw new NotFoundHttpException("Group Not Found"); }
         return $this->handleView($this->view($group));
     }
 
@@ -54,6 +57,10 @@ class GroupController extends FOSRestController
         $group = new Group();
         $form = $this->createForm(GroupType::class, $group);
         $data = json_decode($request->getContent($request), true);
+
+        if(!isset($data["name"]) || strlen($data["name"]) === 0 ){
+            throw new NotAcceptableHttpException("Name is required");
+        }
 
         //users come in as array of objects, we just care about the ids
         if (isset($data["users"]) &&  count($data["users"]) > 0) {
@@ -82,7 +89,14 @@ class GroupController extends FOSRestController
     public function groupAddUser($id, Request $request, EntityManagerInterface $entityManagerInterface, UserRepository $userRepository, GroupRepository $groupRepository)
     {
         $group = $groupRepository->find($id);
+        if (!$group) {
+            throw new NotFoundHttpException("Group Not Found");
+        }
+
         $data = json_decode($request->getContent($request), true);
+        if (!isset($data["name"]) || strlen($data["name"]) === 0) {
+            throw new NotAcceptableHttpException("Name is required");
+        }
 
         //users come in as array of objects, we just care about the ids
         if (isset($data["users"]) &&  count($data["users"]) > 0) {
@@ -105,7 +119,14 @@ class GroupController extends FOSRestController
     public function groupRemoveUser($id, Request $request, EntityManagerInterface $entityManagerInterface, UserRepository $userRepository, GroupRepository $groupRepository)
     {
         $group = $groupRepository->find($id);
+        if (!$group) {
+            throw new NotFoundHttpException("Group Not Found");
+        }
+
         $data = json_decode($request->getContent($request), true);
+        if (!isset($data["name"]) || strlen($data["name"]) === 0) {
+            throw new NotAcceptableHttpException("Name is required");
+        }
 
         //users come in as array of objects, we just care about the ids
         if (isset($data["users"]) &&  count($data["users"]) > 0) {
@@ -128,8 +149,16 @@ class GroupController extends FOSRestController
     public function updateGroup($id, Request $request, EntityManagerInterface $entityManagerInterface, UserRepository $userRepository, GroupRepository $groupRepository)
     {
         $group = $groupRepository->find($id);
-        $form = $this->createForm(GroupType::class, $group);
+        if (!$group) {
+            throw new NotFoundHttpException("Group Not Found");
+        }
+
         $data = json_decode($request->getContent($request), true);
+        if (!isset($data["name"]) || strlen($data["name"]) === 0) {
+            throw new NotAcceptableHttpException("Name is required");
+        }
+
+        $form = $this->createForm(GroupType::class, $group);
 
         //users come in as array of objects, we just care about the ids
         if (isset($data["users"]) && count($data["users"]) > 0) {
@@ -158,12 +187,12 @@ class GroupController extends FOSRestController
     public function deleteGroup($id, EntityManagerInterface $entityManagerInterface, GroupRepository $groupRepository)
     {
         $group = $groupRepository->find($id);
-        if(!$group){
-            throw $this->createNotFoundException("Group does not exist");
+        if (!$group) {
+            throw new NotFoundHttpException("Group Not Found");
         }
 
         if(count($group->getUsers()) > 0){
-            throw new \Exception("Cannot delete group with users", 1);
+            throw new NotAcceptableHttpException("Group with users cannot be deleted");
         }
 
         $entityManagerInterface->remove($group);
