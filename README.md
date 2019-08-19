@@ -1,3 +1,5 @@
+[![GitHub license](https://img.shields.io/badge/license-MIT-lightgrey.svg)]
+
 # userz
 
 Practical Example for a user management app with React as Frontend and Symfony 4 as API backend.
