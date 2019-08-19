@@ -113,7 +113,7 @@ class EditGroup extends Component {
                                         />
                                     </div>
                                 </div>
-                                <button href="#" className="btn btn-primary text-center">Update Group</button>
+                                <button href="#" className="btn btn-primary text-center" disabled={this.state.name.length === 0 ? "disabled" : false}>Update Group</button>
                             </form>
 
                         </div>

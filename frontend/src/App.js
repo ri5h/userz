@@ -22,9 +22,9 @@ function App() {
 
                     <Switch>
                         <Route path="/" exact component={Dashboard}/>
-                        <Route path="/user/add" component={AddUser} />
+                        <Route path="/user/add" component={AddUser}/>
                         <Route path="/user/edit/:id" component={EditUser}/>
-                        <Route path="/group/add" component={AddGroup} />
+                        <Route path="/group/add" component={AddGroup}/>
                         <Route path="/group/edit/:id" component={EditGroup} />
                     </Switch>
 

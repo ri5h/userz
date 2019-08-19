@@ -37,9 +37,8 @@ class GroupList extends Component {
             <div className="card">
                 <div className="card-header">
                     <span className='h3'>Groups</span>
-                    <a
-                        href={CONSTANTS.url.group.add}
-                        className='btn btn-primary text-white float-right'>Add Group</a>
+                    <Link to={"/group/add"} className="btn btn-primary text-white float-right">
+                        Add Group </Link>
                 </div>
                 <div className="card-body">
 

@@ -19,7 +19,7 @@ class AddUser extends Component {
         /*
           Because we named the inputs to match their
           corresponding values in state, it's
-          super easy to update the state
+          super easy to update  state
         */
         this.setState({ [e.target.name]: e.target.value });
     }
@@ -82,7 +82,7 @@ class AddUser extends Component {
                                         />
                                     </div>
                                 </div>
-                                <button href="#" className="btn btn-primary text-center">Add User</button>
+                                <button href="#" className="btn btn-primary text-center" disabled={ this.state.name.length === 0 ? "disabled" : false }>Add User</button>
                             </form>
                             
                         </div>

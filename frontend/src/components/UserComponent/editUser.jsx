@@ -92,7 +92,7 @@ class EditUser extends Component {
                                         />
                                     </div>
                                 </div>
-                                <button href="#" className="btn btn-primary text-center">Update User</button>
+                                <button href="#" className="btn btn-primary text-center" disabled={this.state.name.length === 0 ? "disabled" : false}>Update User</button>
                             </form>
 
                         </div>

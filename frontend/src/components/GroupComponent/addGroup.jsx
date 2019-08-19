@@ -101,7 +101,7 @@ class AddGroup extends Component {
                                         />
                                     </div>
                                 </div>
-                                <button href="#" className="btn btn-primary text-center">Add Group</button>
+                                <button href="#" className="btn btn-primary text-center" disabled={this.state.name.length === 0 ? "disabled" : false}>Add Group</button>
                             </form>
 
                         </div>

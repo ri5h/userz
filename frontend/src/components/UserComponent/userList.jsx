@@ -39,9 +39,9 @@ class UserList extends Component {
             <div className="card">
                 <div className="card-header">
                     <span className='h3'>Users</span>
-                    <a
-                        href={CONSTANTS.url.user.add}
-                        className='btn btn-primary text-white float-right'>Add User</a>
+                    <Link to={"/user/add"} className="btn btn-primary text-white float-right">
+                        Add User </Link>
+                    
                 </div>
                 <div className="card-body">
 

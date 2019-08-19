@@ -1,11 +1,3 @@
 export const CONSTANTS = {
-    api_base_url: 'http://userz.test/backend/public/api/',
-    url :{
-        user : {
-            add : '/user/add'
-        },
-        group : {
-            add : '/group/add'
-        }
-    }
+    api_base_url: 'http://userz.gcloud.rishirajpurohit.in/backend/public/api/',
 };
