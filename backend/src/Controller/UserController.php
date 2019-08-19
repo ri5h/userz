@@ -27,7 +27,7 @@ class UserController extends FOSRestController
     public function readAllUsers(UserRepository $userRepository)
     {
         //get all users from database, return as json
-        $users = $userRepository->findAll();
+        $users = $userRepository->findBy([],['id'=>'DESC']);
         return $this->handleView($this->view($users));
     }
 
