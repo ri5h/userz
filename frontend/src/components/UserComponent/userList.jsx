@@ -1,9 +1,8 @@
 import React, {Component} from 'react';
 import {CONSTANTS} from '../../config.js';
-import User from './user';
 import Axios from 'axios';
 
-class Users extends Component {
+class UserList extends Component {
 
     state = {
         users: []
@@ -14,10 +13,9 @@ class Users extends Component {
     }
 
     getUsers = () => {
-        fetch(CONSTANTS.api_base_url + 'user')
-            .then(res => res.json())
+        Axios.get(CONSTANTS.api_base_url + 'user')
             .then((result) => {
-                this.setState({users: result});
+                this.setState({users: result.data});
                 console.log(this.state);
             });
     }
@@ -34,7 +32,7 @@ class Users extends Component {
 
     render() {
         const users = this.state.users;
-        const listUsers = users.map((user) => <User user={user} key={user.id} deleteUser={this.deleteUser}></User>);
+        
         return (
             <div className="card">
                 <div className="card-header">
@@ -45,7 +43,7 @@ class Users extends Component {
                 </div>
                 <div className="card-body">
 
-                    <table className="table table-striped">
+                    <table className="table ">
                         <thead>
                             <tr>
                                 <th>Id</th>
@@ -54,7 +52,19 @@ class Users extends Component {
                                 <th>Action</th>
                             </tr>
                         </thead>
-                        {listUsers}
+                        <tbody>
+                            {users.map(user => (
+                                <tr key={user.id}>
+                                    <td>{user.id}</td>
+                                    <td>{user.name}</td>
+                                    <td>{user.users}</td>
+                                    <td>
+                                        <button className="btn btn-sm btn-info text-white mx-2">Edit</button>
+                                        <button className="btn btn-sm btn-danger text-white mx-2" onClick={() => this.deleteUser(user.id)} >Delete</button>
+                                    </td>
+                                </tr>
+                            ))}
+                        </tbody>
                     </table>
                 </div>
             </div>
@@ -63,4 +73,4 @@ class Users extends Component {
     }
 }
 
-export default Users;
+export default UserList;

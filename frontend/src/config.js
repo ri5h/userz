@@ -3,6 +3,9 @@ export const CONSTANTS = {
     url :{
         user : {
             add : '/user/add'
+        },
+        group : {
+            add : '/group/add'
         }
     }
 };
