@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {CONSTANTS} from '../../config.js';
 import Axios from 'axios';
+import { Link } from 'react-router-dom';
 
 class UserList extends Component {
 
@@ -13,14 +14,15 @@ class UserList extends Component {
     }
 
     getUsers = () => {
-        Axios.get(CONSTANTS.api_base_url + 'user')
+        Axios
+            .get(CONSTANTS.api_base_url + 'user')
             .then((result) => {
                 this.setState({users: result.data});
                 console.log(this.state);
             });
     }
 
-    deleteUser = (id,name) => {
+    deleteUser = (id, name) => {
         var confirm = window.confirm("Are you sure you want to delete user " + name + " ?");
         if (confirm) {
             Axios
@@ -32,7 +34,7 @@ class UserList extends Component {
 
     render() {
         const users = this.state.users;
-        
+
         return (
             <div className="card">
                 <div className="card-header">
@@ -59,8 +61,12 @@ class UserList extends Component {
                                     <td>{user.name}</td>
                                     <td>{user.groups.length}</td>
                                     <td>
-                                        <button className="btn btn-sm btn-info text-white mx-2">Edit</button>
-                                        <button className="btn btn-sm btn-danger text-white mx-2" onClick={() => this.deleteUser(user.id)} >Delete</button>
+                                        <Link to={"/user/edit/"+ user.id} className="btn btn-sm btn-info text-white mx-2">
+                                            Edit
+                                        </Link>
+                                        <button
+                                            className="btn btn-sm btn-danger text-white mx-2"
+                                            onClick={() => this.deleteUser(user.id, user.name)}>Delete</button>
                                     </td>
                                 </tr>
                             ))}

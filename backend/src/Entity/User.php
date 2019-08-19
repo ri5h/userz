@@ -68,6 +68,13 @@ class User
         return $this;
     }
 
+    public function removeAllGroups() : self {
+        foreach ($this->groups as $group) {
+            $this->removeGroup($group);
+        }
+        return $this;
+    }
+
     public function removeGroup(Group $group): self
     {
         if ($this->groups->contains($group)) {

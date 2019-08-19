@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import {CONSTANTS} from '../../config.js';
 import Axios from 'axios';
+import { Link } from 'react-router-dom';
 
 class GroupList extends Component {
     state = {
@@ -24,7 +25,7 @@ class GroupList extends Component {
         var confirm = window.confirm("Are you sure you want to delete group " + name + " ?");
         if (confirm) {
             Axios
-                .delete(CONSTANTS.api_base_url + 'user/' + id)
+                .delete(CONSTANTS.api_base_url + 'group/' + id)
                 .then((result) => this.getGroups());
         }
 
@@ -58,8 +59,11 @@ class GroupList extends Component {
                                     <td>{group.name}</td>
                                     <td>{group.users.length}</td>
                                     <td>
-                                        <button className="btn btn-sm btn-info text-white mx-2">Edit</button>
+                                        <Link to={"/group/edit/" + group.id} className="btn btn-sm btn-info text-white mx-2">
+                                            Edit
+                                        </Link>
                                         <button
+                                            disabled={ group.users.length > 0 ? "disabled" : false}
                                             className="btn btn-sm btn-danger text-white mx-2"
                                             onClick={() => this.deleteGroup(group.id, group.name)}>Delete</button>
                                     </td>

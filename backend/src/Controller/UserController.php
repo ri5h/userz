@@ -32,6 +32,19 @@ class UserController extends FOSRestController
         return $this->handleView($this->view($users));
     }
 
+
+    /**
+     * @Rest\Get("/user/{id}")
+     * 
+     * @return Response
+     */
+    public function readUser($id,UserRepository $userRepository)
+    {
+        //get all users from database, return as json
+        $users = $userRepository->findOneBy(["id"=>$id]);
+        return $this->handleView($this->view($users));
+    }
+
     /**
      * @Rest\Post("/user")
      * 
@@ -44,7 +57,7 @@ class UserController extends FOSRestController
         $data = json_decode($request->getContent($request), true);
 
         //groups come in as array of objects, we just care about the ids
-        if (count($data["groups"]) > 0) {
+        if (isset($data["groups"]) &&  count($data["groups"]) > 0) {
             foreach ($data["groups"] as $group) {
                 $user->addGroup( $groupRepository->findOneBy([ "id" => $group["id"] ]));
             }
@@ -54,11 +67,45 @@ class UserController extends FOSRestController
         $form->submit($data);
 
         if($form->isSubmitted() && $form->isValid()){
+            //save and return
             $entityManagerInterface->persist($user);
-            //dd($user);
             $entityManagerInterface->flush();
             return $this->handleView($this->view(['status'=>'ok'], Response::HTTP_CREATED));
         }        
+        return $this->handleView($this->view($form->getErrors()));
+    }
+
+
+    /**
+     * @Rest\Put("/user/{id}")
+     * 
+     * @return Response
+     */
+    public function updateUser($id, Request $request, EntityManagerInterface $entityManagerInterface, GroupRepository $groupRepository, UserRepository $userRepository)
+    {
+        $user = $userRepository->findOneBy(["id"=>$id]);
+        $form = $this->createForm(UserType::class, $user);
+        $data = json_decode($request->getContent($request), true);
+
+        //groups come in as array of objects, we just care about the ids
+        //TODO : use real update by takling a diff of current groups and required groups
+        //HACK : delete all and then add new groups
+        $user->removeAllGroups();
+        if (isset($data["groups"]) && count($data["groups"]) > 0) {
+            foreach ($data["groups"] as $group) {
+                $user->addGroup($groupRepository->findOneBy(["id" => $group["id"]]));
+            }
+            unset($data["groups"]);
+        }
+
+        $form->submit($data);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            //save and return
+            $entityManagerInterface->persist($user);
+            $entityManagerInterface->flush();
+            return $this->handleView($this->view(['status' => 'ok'], Response::HTTP_OK));
+        }
         return $this->handleView($this->view($form->getErrors()));
     }
 
@@ -71,6 +118,9 @@ class UserController extends FOSRestController
     public function deleteUser($id, EntityManagerInterface $entityManagerInterface, UserRepository $userRepository)
     {
         $user = $userRepository->find($id);
+        if (!$user) {
+            throw $this->createNotFoundException("User does not exist");
+        }
         $entityManagerInterface->remove($user);
         $entityManagerInterface->flush();
         return $this->handleView($this->view(['status' => 'ok'], Response::HTTP_NO_CONTENT));
