@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import Axios from 'axios';
 import {CONSTANTS} from '../../config.js';
 import {Link} from 'react-router-dom';
-//import {Multiselect} from 'multiselect-react-dropdown';
 import Select from 'react-select';
 
 class AddGroup extends Component {
