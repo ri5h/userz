@@ -1,0 +1,395 @@
+{
+	"info": {
+		"_postman_id": "87f00938-8337-49c5-b3eb-865e6d362aed",
+		"name": "UserzPostmanAPICollection",
+		"description": "Api collection to use the apis for the userz app created for technical test.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Get All Users",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://userz.test/backend/public/api/user",
+							"protocol": "http",
+							"host": [
+								"userz",
+								"test"
+							],
+							"path": [
+								"backend",
+								"public",
+								"api",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add a User",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"malko man2\",\n    \"groups\": [\n        {\n            \"id\": 2,\n            \"name\": \"testers\",\n            \"users\": [\n                {\n                    \"id\": 7,\n                    \"name\": \"test\",\n                    \"groups\": []\n                }\n            ]\n        },\n        {\n            \"id\": 1,\n            \"name\": \"Designers\",\n            \"users\": []\n        }\n    ]\n}"
+						},
+						"url": {
+							"raw": "http://userz.test/backend/public/api/user",
+							"protocol": "http",
+							"host": [
+								"userz",
+								"test"
+							],
+							"path": [
+								"backend",
+								"public",
+								"api",
+								"user"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Delete a User with id",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "http://userz.test/backend/public/api/user/1",
+							"protocol": "http",
+							"host": [
+								"userz",
+								"test"
+							],
+							"path": [
+								"backend",
+								"public",
+								"api",
+								"user",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get groups of a user",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://userz.test/backend/public/api/user/2/groups",
+							"protocol": "http",
+							"host": [
+								"userz",
+								"test"
+							],
+							"path": [
+								"backend",
+								"public",
+								"api",
+								"user",
+								"2",
+								"groups"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get a User",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://userz.test/backend/public/api/user/10",
+							"protocol": "http",
+							"host": [
+								"userz",
+								"test"
+							],
+							"path": [
+								"backend",
+								"public",
+								"api",
+								"user",
+								"10"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Update User",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"malko boyzz\",\n    \"groups\": [\n        {\n            \"id\": 1,\n            \"name\": \"Designers\",\n            \"users\": []\n        },\n        {\n            \"id\": 2,\n            \"name\": \"testers\",\n            \"users\": [\n                {\n                    \"id\": 7,\n                    \"name\": \"test\",\n                    \"groups\": []\n                }\n            ]\n        }\n    ]\n}"
+						},
+						"url": {
+							"raw": "http://userz.test/backend/public/api/user/10",
+							"protocol": "http",
+							"host": [
+								"userz",
+								"test"
+							],
+							"path": [
+								"backend",
+								"public",
+								"api",
+								"user",
+								"10"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Group",
+			"item": [
+				{
+					"name": "Get a group",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://userz.test/backend/public/api/group/2",
+							"protocol": "http",
+							"host": [
+								"userz",
+								"test"
+							],
+							"path": [
+								"backend",
+								"public",
+								"api",
+								"group",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Get all groups",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://userz.test/backend/public/api/group",
+							"protocol": "http",
+							"host": [
+								"userz",
+								"test"
+							],
+							"path": [
+								"backend",
+								"public",
+								"api",
+								"group"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete a group",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://userz.test/backend/public/api/group/5",
+							"protocol": "http",
+							"host": [
+								"userz",
+								"test"
+							],
+							"path": [
+								"backend",
+								"public",
+								"api",
+								"group",
+								"5"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add User to Group",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"users\":[\n\t\t\t{\n\t\t\t\t\"id\":9\n\t\t\t}\n\t\t]\n}"
+						},
+						"url": {
+							"raw": "http://userz.test/backend/public/api/group/5/addUser",
+							"protocol": "http",
+							"host": [
+								"userz",
+								"test"
+							],
+							"path": [
+								"backend",
+								"public",
+								"api",
+								"group",
+								"5",
+								"addUser"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "remove user from group",
+					"request": {
+						"method": "PATCH",
+						"header": [
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"users\":[\n\t\t\t{\n\t\t\t\t\"id\":9\n\t\t\t}\n\t\t]\n}"
+						},
+						"url": {
+							"raw": "http://userz.test/backend/public/api/group/5/removeUser",
+							"protocol": "http",
+							"host": [
+								"userz",
+								"test"
+							],
+							"path": [
+								"backend",
+								"public",
+								"api",
+								"group",
+								"5",
+								"removeUser"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Add a group",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Accept",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Content-Type",
+								"name": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n\t\"name\":\"demo group\"\n}"
+						},
+						"url": {
+							"raw": "http://userz.test/backend/public/api/group",
+							"protocol": "http",
+							"host": [
+								"userz",
+								"test"
+							],
+							"path": [
+								"backend",
+								"public",
+								"api",
+								"group"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
