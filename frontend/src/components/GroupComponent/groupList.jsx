@@ -56,7 +56,7 @@ class GroupList extends Component {
                                 <tr key={group.id}>
                                     <td>{group.id}</td>
                                     <td>{group.name}</td>
-                                    <td>{group.users}</td>
+                                    <td>{group.users.length}</td>
                                     <td>
                                         <button className="btn btn-sm btn-info text-white mx-2">Edit</button>
                                         <button

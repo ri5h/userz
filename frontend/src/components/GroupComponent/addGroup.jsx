@@ -2,16 +2,16 @@ import React, {Component} from 'react';
 import Axios from 'axios';
 import {CONSTANTS} from '../../config.js';
 import {Link} from 'react-router-dom';
+//import {Multiselect} from 'multiselect-react-dropdown';
+import Select from 'react-select';
 
 class AddGroup extends Component {
-    constructor() {
-        super();
-        this.state = {
-            name: '',
-            users: [],
-            available_users: []
-        };
-    }
+    
+    state = {
+        name: '',
+        users: [],
+        available_users: [ ]
+    };
 
     componentDidMount() {
         this.getUsers();
@@ -21,9 +21,14 @@ class AddGroup extends Component {
         Axios
             .get(CONSTANTS.api_base_url + 'user')
             .then((result) => {
-                this.setState({available_users: result.data});
+                let res_users = result.data;
+                this.setState({available_users: res_users});
                 console.log(this.state);
             });
+    }
+
+    handleChange = selectedOption => {
+        this.setState({ users:selectedOption });
     }
 
     onChange = (e) => {
@@ -39,11 +44,13 @@ class AddGroup extends Component {
 
     onSubmit = (e) => {
         e.preventDefault();
+        
+        console.log(this.state);
         // get our form data out of state
-        const {name, users} = this.state;
+        const { name, users } = this.state;
 
         Axios
-            .post(CONSTANTS.api_base_url + 'group', {name, users})
+            .post(CONSTANTS.api_base_url + 'group', { name, users })
             .then((result) => {
                 console.log(result);
                 this
@@ -51,13 +58,16 @@ class AddGroup extends Component {
                     .history
                     .push("/");
             });
+       
     }
 
+    
+
     render() {
-        const available_users = this.state.available_users;
+        
         return (
             <div className="col-sm-12  my-5">
-                <div className="col col-sm-6 mx-auto">
+                <div className="col col-sm-12 col-md-6 mx-auto">
                     <Link to="/" className="btn btn-info text-white my-1">
                         Go Back
                     </Link>
@@ -75,19 +85,21 @@ class AddGroup extends Component {
                                             id="inputName"
                                             placeholder="Developers"
                                             name="name"
-                                            onChange={this.onChange}/>
+                                            onChange={this.onChange}
+                                            />
                                     </div>
                                 </div>
                                 <div className="form-group row">
                                     <label htmlFor="inputGroups" className="col-sm-2 col-form-label">Users</label>
                                     <div className="col-sm-10">
-                                        <select className="form-control" multiple>
-                                            {available_users
-                                                .map(user => (
-                                                    <option key={user.id} value={user.id}>{user.name}</option>
-                                                ))}
-                                        </select>
-
+                                        <Select
+                                            isMulti
+                                            value={this.state.users}
+                                            onChange={this.handleChange}
+                                            options={this.state.available_users}
+                                            getOptionLabel={(option) => option.name}
+                                            getOptionValue={(option) => option.id}
+                                        />
                                     </div>
                                 </div>
                                 <button href="#" className="btn btn-primary text-center">Add Group</button>

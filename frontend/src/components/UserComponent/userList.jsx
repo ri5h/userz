@@ -57,7 +57,7 @@ class UserList extends Component {
                                 <tr key={user.id}>
                                     <td>{user.id}</td>
                                     <td>{user.name}</td>
-                                    <td>{user.users}</td>
+                                    <td>{user.groups.length}</td>
                                     <td>
                                         <button className="btn btn-sm btn-info text-white mx-2">Edit</button>
                                         <button className="btn btn-sm btn-danger text-white mx-2" onClick={() => this.deleteUser(user.id)} >Delete</button>

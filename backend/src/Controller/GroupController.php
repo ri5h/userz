@@ -42,6 +42,15 @@ class GroupController extends FOSRestController
         $form = $this->createForm(GroupType::class, $group);
         $data = json_decode($request->getContent($request), true);
 
+        //users come in as array of objects, we just care about the ids
+        if(count($data["users"]) > 0){
+            $tmp = [];
+            foreach($data["users"] as $user){
+                $tmp[] = $user["id"];
+            }
+            $data["users"] = $tmp;
+        }
+
         $form->submit($data);
 
         if ($form->isSubmitted() && $form->isValid()) {
