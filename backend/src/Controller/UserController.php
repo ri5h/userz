@@ -15,6 +15,9 @@ use App\Repository\GroupRepository;
 use App\Repository\UserRepository;
 use Doctrine\ORM\EntityManagerInterface;
 
+use Symfony\Component\HttpKernel\Exception\NotAcceptableHttpException;
+use Symfony\Component\HttpKernel\Exception\NotFoundHttpException;
+
 /**
  * @Route("/api",name="user_api")
  */

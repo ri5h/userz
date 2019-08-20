@@ -31,3 +31,8 @@ services:
     # https://github.com/FriendsOfSymfony/FOSRestBundle/issues/1768
     sensio_framework_extra.view.listener:
         alias: Sensio\Bundle\FrameworkExtraBundle\EventListener\TemplateListener
+    
+    published_message.listener:
+        class: App\EventListeners\ExceptionListener
+        tags:
+            - { name: kernel.event_listener, event: kernel.exception, method: onKernelException }
