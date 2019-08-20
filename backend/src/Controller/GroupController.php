@@ -61,11 +61,13 @@ class GroupController extends FOSRestController
         }
 
         //users come in as array of objects, we just care about the ids
-        if (isset($data["users"]) &&  count($data["users"]) > 0) {
+        if (isset($data["users"]) && count($data["users"]) > 0) {
+            $tmp = [];
             foreach ($data["users"] as $user) {
-                $group->addUser($userRepository->find($user["id"]));
+                $tmp[] = $user["id"];
             }
-            unset($data["users"]);
+            $data["users"] = $tmp;
+            
         }
         $form = $this->createForm(GroupType::class, $group);
         $form->submit($data);
@@ -160,11 +162,13 @@ class GroupController extends FOSRestController
 
         //users come in as array of objects, we just care about the ids
         if (isset($data["users"]) && count($data["users"]) > 0) {
+
+            $tmp = [];
             foreach ($data["users"] as $user) {
-                $group->addUser($userRepository->find($user["id"]));
+                $tmp[] = $user["id"];
             }
-            unset($data["users"]);
-        }    
+            $data["users"] = $tmp;
+        }   
 
         
         $form->submit($data);
