@@ -24,6 +24,9 @@ Practical Example for a user management app with React as Frontend and Symfony 4
   - react-select
   
 ---- 
+#### Please Don't call me stupid
+- The output files and config files are safe to publilsh here for ease of access and use and Even though I check them throughly and update all passwords before adding the files, mistakes can happen but I try my best to minimize the scope. Also, for me uploading data is important for now, once I setup enviorments and CI/CD, the outputs will be gone.
+
 
 #### Detailed description
 - This app is a simple demo implementation to show how we can use reactjs in the frontend and symfony4 in the backend for a simple starting point. Though this app considers a lot of things it is nowhere ready for production.
