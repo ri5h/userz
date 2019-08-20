@@ -41,9 +41,10 @@ Practical Example for a user management app with React as Frontend and Symfony 4
 
 #### Todo
 1. ~~Add better validations as current app does not validate much data.~~
-2. Reformat some code to avoid duplication and improve code quality.
-3. Write Test Cases to cover other aspects.
-4. Set up CI/CD with testing automation to deploy automatically.
+2. Add Pagination in dashboard. (Can use datatables).
+3. Reformat some code to avoid duplication and improve code quality.
+4. Write Test Cases to cover other aspects.
+5. Set up CI/CD with testing automation to deploy automatically.
 
 ----
 
