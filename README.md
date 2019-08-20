@@ -40,7 +40,7 @@ Practical Example for a user management app with React as Frontend and Symfony 4
 7. npm run serve
 
 #### Todo
-1. Add better validations as current app does not validate much data.
+1. ~~Add better validations as current app does not validate much data.~~
 2. Reformat some code to avoid duplication and improve code quality.
 3. Write Test Cases to cover other aspects.
 4. Set up CI/CD with testing automation to deploy automatically.
