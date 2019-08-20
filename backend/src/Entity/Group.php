@@ -64,7 +64,6 @@ class Group
         if (!$this->users->contains($user)) {
             $this->users[] = $user;
         }
-
         return $this;
     }
 

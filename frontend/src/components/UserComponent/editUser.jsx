@@ -29,7 +29,7 @@ class EditUser extends Component {
         Axios
             .get(CONSTANTS.api_base_url + 'group')
             .then((result) => {
-                let res_groups = result.data;
+                let res_groups = result.data.map((group) => ({ "id": group.id, name: group.name }));
                 this.setState({ available_groups: res_groups });
                 //console.log(this.state);
             });

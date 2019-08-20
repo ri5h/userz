@@ -84,7 +84,7 @@ class EditGroup extends Component {
 
                     <div className="card">
                         <div className="card-body">
-                            <h5 className="card-title text-center">Create New Group</h5>
+                            <h5 className="card-title text-center">Edit Group</h5>
                             <form onSubmit={this.onSubmit}>
                                 <div className="form-group row">
                                     <label htmlFor="inputName" className="col-sm-2 col-form-label">Name</label>

@@ -55,9 +55,7 @@ class GroupController extends FOSRestController
     public function addGroup(Request $request, EntityManagerInterface $entityManagerInterface, UserRepository $userRepository)
     {
         $group = new Group();
-        $form = $this->createForm(GroupType::class, $group);
         $data = json_decode($request->getContent($request), true);
-
         if(!isset($data["name"]) || strlen($data["name"]) === 0 ){
             throw new NotAcceptableHttpException("Name is required");
         }
@@ -65,11 +63,11 @@ class GroupController extends FOSRestController
         //users come in as array of objects, we just care about the ids
         if (isset($data["users"]) &&  count($data["users"]) > 0) {
             foreach ($data["users"] as $user) {
-                $group->addUser($userRepository->findOneBy(["id" => $user["id"]]));
+                $group->addUser($userRepository->find($user["id"]));
             }
             unset($data["users"]);
         }
-
+        $form = $this->createForm(GroupType::class, $group);
         $form->submit($data);
 
         if ($form->isSubmitted() && $form->isValid()) {
@@ -97,7 +95,7 @@ class GroupController extends FOSRestController
         if (!isset($data["name"]) || strlen($data["name"]) === 0) {
             throw new NotAcceptableHttpException("Name is required");
         }
-
+        
         //users come in as array of objects, we just care about the ids
         if (isset($data["users"]) &&  count($data["users"]) > 0) {
             foreach ($data["users"] as $user) {
@@ -107,6 +105,7 @@ class GroupController extends FOSRestController
 
         $entityManagerInterface->persist($group);
         $entityManagerInterface->flush();
+        
         return $this->handleView($this->view(['status' => 'ok'], Response::HTTP_NO_CONTENT));
     }
 
@@ -157,17 +156,17 @@ class GroupController extends FOSRestController
         if (!isset($data["name"]) || strlen($data["name"]) === 0) {
             throw new NotAcceptableHttpException("Name is required");
         }
-
         $form = $this->createForm(GroupType::class, $group);
 
         //users come in as array of objects, we just care about the ids
         if (isset($data["users"]) && count($data["users"]) > 0) {
             foreach ($data["users"] as $user) {
-                $group->addUser($userRepository->findOneBy(["id" => $user["id"]]));
+                $group->addUser($userRepository->find($user["id"]));
             }
             unset($data["users"]);
-        }
+        }    
 
+        
         $form->submit($data);
 
         if ($form->isSubmitted() && $form->isValid()) {

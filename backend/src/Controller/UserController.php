@@ -67,7 +67,7 @@ class UserController extends FOSRestController
         //groups come in as array of objects, we just care about the ids
         if (isset($data["groups"]) &&  count($data["groups"]) > 0) {
             foreach ($data["groups"] as $group) {
-                $user->addGroup( $groupRepository->findOneBy([ "id" => $group["id"] ]));
+                $user->addGroup( $groupRepository->find($group["id"]));
             }
             unset($data["groups"]);
         }
