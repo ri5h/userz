@@ -64,8 +64,6 @@ class UserController extends FOSRestController
             throw new NotAcceptableHttpException("Name is required");
         }
 
-        $form = $this->createForm(UserType::class, $user);
-
         //groups come in as array of objects, we just care about the ids
         if (isset($data["groups"]) &&  count($data["groups"]) > 0) {
             foreach ($data["groups"] as $group) {
@@ -73,7 +71,8 @@ class UserController extends FOSRestController
             }
             unset($data["groups"]);
         }
-        
+
+        $form = $this->createForm(UserType::class, $user);
         $form->submit($data);
 
         if($form->isSubmitted() && $form->isValid()){
@@ -103,8 +102,6 @@ class UserController extends FOSRestController
             throw new NotAcceptableHttpException("Name is required");
         }
 
-        $form = $this->createForm(UserType::class, $user);
-
         //groups come in as array of objects, we just care about the ids
         //TODO : use real update by takling a diff of current groups and required groups
         //HACK : delete all and then add new groups
@@ -116,6 +113,7 @@ class UserController extends FOSRestController
             unset($data["groups"]);
         }
 
+        $form = $this->createForm(UserType::class, $user);
         $form->submit($data);
 
         if ($form->isSubmitted() && $form->isValid()) {
