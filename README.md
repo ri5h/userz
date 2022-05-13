@@ -5,6 +5,9 @@
 Practical Example for a user management app with React as Frontend and Symfony 4 as API backend.
 - please find the technical requirements doc for functionalities.
 
+#### Screenshot
+![screenshot](https://raw.githubusercontent.com/ri5h/userz/master/304e0280-c2ec-11e9-9c7e-c8c073f65808.png)
+
 #### Tech Stack
 - Frontend : ReactJs
 - Backend : Symfony4
